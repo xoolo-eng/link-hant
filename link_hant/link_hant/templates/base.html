@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Moschino | Minimalist Free HTML Portfolio by WowThemes.net</title>
+    {% include "styles.html" %}
+</head>
+<body>
+    <div id="page">
+        <div class="container">
+            {% include "nav.html" %}
+            <div id="content" class="site-content">
+                <div id="primary" class="content-area column full">
+                    <main id="main" class="site-main">
+                        {% block home %}{% endblock home %}
+                    </main>
+                </div>
+            </div>
+        </div>
+        {% include "footer.html" %}
+    </div>
+</body>
+{% include "scripts.html" %}
+</html>
