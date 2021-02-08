@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponseRedirect
+from home.forms import QuickContactForm, QuickForm
 
 
 def home_page(request):
@@ -12,5 +13,14 @@ def about_page(request):
 
 
 def contact_page(request):
-    context = {}
+    context = {
+        "form": QuickForm(),
+    }
+    if request.method == "POST":
+        form = QuickForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect("/home/")
+        else:
+            context.update(form=form)
     return render(request, "contact.html", context)

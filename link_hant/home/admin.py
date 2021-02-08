@@ -1,3 +1,9 @@
 from django.contrib import admin
+from home.models import QuickContact
 
-# Register your models here.
+
+class AdminQuickContact(admin.ModelAdmin):
+    list_display = ["name", "email"]
+
+
+admin.site.register(QuickContact, AdminQuickContact)
