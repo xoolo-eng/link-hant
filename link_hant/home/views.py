@@ -14,10 +14,10 @@ def about_page(request):
 
 def contact_page(request):
     context = {
-        "form": QuickForm(),
+        "form": QuickContactForm(),
     }
     if request.method == "POST":
-        form = QuickForm(request.POST)
+        form = QuickContactForm(request.POST)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect("/home/")

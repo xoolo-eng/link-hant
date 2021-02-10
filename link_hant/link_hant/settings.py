@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "link_hant",
+    "user",
     "home",
     "blog",
 ]
@@ -122,3 +123,5 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "link_hant" / "static"
+
+AUTH_USER_MODEL = "user.User"

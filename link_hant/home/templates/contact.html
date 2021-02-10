@@ -30,15 +30,21 @@
                     id="contactform"
                 >
                     {% csrf_token %}
+                    {% if form.non_field_errors %}
+                    <div clas="done">{{ form.non_field_errors }}</div>
+                    {% endif %}
                     <div class="form">
                         <p>
+                            {{ form.name.errors }}
                             {{ form.name }}
                         </p>
                         <p>
+                            {{ form.email.errors }}
                             {{ form.email }}
                         </p>
                         <p>
-                           {{ form.message }}
+                            {{ form.message.errors }}
+                            {{ form.message }}
                         </p>
                         <input
                             type="submit"

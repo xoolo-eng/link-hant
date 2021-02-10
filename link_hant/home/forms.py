@@ -28,15 +28,45 @@ class QuickContactForm(forms.Form):
     )
 
     def save(self):
-        QuickContact.objects.create(**self.cleaned_data)
+        return QuickContact.objects.create(**self.cleaned_data)
 
     def clean(self):
-        print("VALIDACIYA!!!")
+        error = False
+        if len(self.cleaned_data["name"]) > 30:
+            error = True
+            self.add_error("name", ["Максимум 30 символов.", "Еще какая то ошибка"])
+        if "FUCK" in self.cleaned_data["message"]:
+            error = True
+            self.add_error("message", "Не ругайтесь на..")
+        if error:
+            raise forms.ValidationError("Не корректные данные.")
         return self.cleaned_data
+
+    def clean_email(self):
+        if not self.cleaned_data["email"].endswith(".com"):
+            raise forms.ValidationError("Не кашерный емаил.")
+        return self.cleaned_data["email"]
 
 
 class QuickForm(forms.ModelForm):
     
     class Meta:
         model=QuickContact
-        fields = "__all__"
+        exclude=("is_moderate",)
+
+    def clean(self):
+        error = False
+        if len(self.cleaned_data["name"]) > 30:
+            error = True
+            self.add_error("name", ["Максимум 30 символов.", "Еще какая то ошибка"])
+        if "FUCK" in self.cleaned_data["message"]:
+            error = True
+            self.add_error("message", "Не ругайтесь на..")
+        if error:
+            raise forms.ValidationError("Не корректные данные.")
+        return self.cleaned_data
+
+    def clean_email(self):
+        if not self.cleaned_data["email"].endswith(".com"):
+            raise forms.ValidationError("Не кашерный емаил.")
+        return self.cleaned_data["email"]
