@@ -13,3 +13,7 @@ class User(AbstractUser):
         max_length=1,
         verbose_name="Sex."
     )
+
+    def __str__(self):
+        return self.username
+    
