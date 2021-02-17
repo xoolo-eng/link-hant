@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Moschino | Minimalist Free HTML Portfolio by WowThemes.net</title>
     {% include "styles.html" %}
+    {% block styles %}{% endblock styles %}
+    {% block js_top %}{% endblock js_top %}
 </head>
 <body>
     <div id="page">
@@ -24,4 +26,5 @@
     </div>
 </body>
 {% include "scripts.html" %}
+{% block js_bottom %}{% endblock js_bottom %}
 </html>

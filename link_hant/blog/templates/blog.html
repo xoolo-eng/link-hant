@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block blog %}
+<article>
+    <header class="entry-header">
+        <h1 class="entry-title">{{object.title}}</h1>
+        <div class="entry-meta">
+            <span class="posted-on">
+                <time class="entry-date published">{{object.create}}</time> 
+                {% if object.user.first_name %}
+                {{object.user.first_name}}
+                {% else %}
+                {{object.user.username}}
+                {% endif %}
+            </span>
+            <span class="comments-link">
+                <a href="#">Leave a comment</a>
+            </span>
+        </div>
+        {% comment %} <div class="entry-thumbnail">
+            <img src="http://s3.amazonaws.com/caymandemo/wp-content/uploads/sites/10/2015/09/30160348/sep4.jpg" alt="">
+        </div> {% endcomment %}
+    </header>
+    <!-- .entry-header -->
+    <div class="entry-content">
+        <p>
+            {{object.text}}
+        </p>
+    </div>
+    <!-- .entry-content -->
+    <footer class="entry-footer">
+        <span class="cat-links">
+            Posted in
+            {% for tag in object.tags.all %}
+            <a href={% url 'blog_records' %}?page=1&tag={{tag.name}} rel="category tag">{{ tag.name }}</a>,
+            {% endfor %}
+        </span>
+    </footer>
+    <!-- .entry-footer -->
+</article>
+<!-- #post-## -->
+<nav class="navigation post-navigation" role="navigation">
+    <h1 class="screen-reader-text">Post navigation</h1>
+    <div class="nav-links">
+        <div class="nav-previous">
+            <a href="#" rel="prev">
+                <span class="meta-nav">←</span> Thanks for watching!
+            </a>
+        </div>
+    </div>
+    <!-- .nav-links -->
+</nav>
+<!-- .navigation -->
+{% include "comments.html" %}
+{% endblock blog %}

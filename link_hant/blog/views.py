@@ -1,13 +1,26 @@
 from django.shortcuts import render
-from blog.models import Blog
+from django.views.generic import ListView, DetailView
+from blog.models import Blog, Tags
 
 
-def records(request, page_id):
-    count = 3
-    start = count * page_id - count
-    context = {"records": Blog.objects.all()[start:start+count]}
-    return render(request, "blogs.html", context)
+class AllBlogs(ListView):
+    model = Blog
+    template_name = "blogs.html"
+    paginate_by = 3
+
+    def get_queryset(self):
+        if self.request.GET.get("tag"):
+            return self.model.objects.filter(tags__name=self.request.GET.get("tag"))
+        return super().get_queryset()
 
 
-def record(request, blog_id):
-    pass
+class OneBlog(DetailView):
+    model = Blog
+    template_name = "blog.html"
+
+    # def get_context_data(self, **kwargs):
+        # # Call the base implementation first to get a context
+        # context = super().get_context_data(**kwargs)
+        # # Add in a QuerySet of all the books
+        # context['book_list'] = Book.objects.all()
+        # return context

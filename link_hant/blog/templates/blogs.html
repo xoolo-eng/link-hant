@@ -1,23 +1,23 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block blog %}
 <div id="content" class="site-content">
     <div id="primary" class="content-area column two-thirds">
         <main id="main" class="site-main" role="main">
             <div class="grid bloggrid">
-            {% for record in records %}
+            {% for record in object_list %}
                 <article>
                     <header class="entry-header">
-                        <h1 class="entry-title">
-                            <a href="blog-single.html" rel="bookmark">{{ record.title|truncatechars:20 }}</a>
+                        <h1 class="entry-title" style="margin-top: 20px">
+                            <a href={% url 'blog_record' record.id %} rel="bookmark">{{ record.title|truncatechars:20 }}</a>
                         </h1>
                         <div class="entry-meta">
                             <span class="posted-on">
                                 <time class="entry-date published">{{ record.create }}</time>
                             </span>
-                            {% comment %} <span class="comments-link">
-                                <a href="#">Leave a comment</a>
-                            </span> {% endcomment %}
+                            <span class="comments-link">
+                                <a href="">Leave a comment</a>
+                            </span>
                         </div>
                         {% comment %} <div class="entry-thumbnail">						
                             <img src="http://s3.amazonaws.com/caymandemo/wp-content/uploads/sites/10/2015/09/30160348/sep4.jpg" alt="">
@@ -25,12 +25,15 @@
                     </header>
                     <div class="entry-summary">
                         <p>
-                            {{ record.text|truncatechars:200 }} <a class="more-link" href="">Read more</a>
+                            {{ record.text|truncatechars:200 }} <a class="more-link" href={% url 'blog_record' record.id %} >Read more</a>
                         </p>
                     </div>
                     <footer class="entry-footer">
                         <span class="cat-links">
-                        Posted in <a href="#" rel="category tag">audio</a>, <a href="#" rel="category tag">embed</a>, <a href="#" rel="category tag">media</a>
+                        Posted in
+                        {% for tag in record.tags.all %}
+                        <a href={% url 'blog_records' %}?page=1&tag={{tag.name}}rel="category tag">{{ tag.name }}</a>,
+                        {% endfor %}
                         </span>
                     </footer>
                 </article>
@@ -39,7 +42,23 @@
             </div>
             <div class="clearfix">
             </div>
-            <nav class="pagination"></nav>
+            <nav class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1{% if 'tag' in request.GET %}&tag={{request.GET.tag}}{%endif%}">&laquo; first</a>
+                        <a href="?page={{ page_obj.previous_page_number }}{% if 'tag' in request.GET %}&tag={{request.GET.tag}}{%endif%}">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}{% if 'tag' in request.GET %}&tag={{request.GET.tag}}{%endif%}">next</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}{% if 'tag' in request.GET %}&tag={{request.GET.tag}}{%endif%}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </nav>
         </main>
         <!-- #main -->
     </div>

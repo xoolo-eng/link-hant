@@ -20,28 +20,8 @@
                     <a href="shop.html">Shop</a>
                 </li>
                 <li>
-                    <a href={% url "blog_records" "1" %}>Blog</a>
+                    <a href={% url "blog_records" %}?page=1>Blog</a>
                 </li>
-                {% comment %} <li>
-                    <a href="elements.html">Elements</a>
-                </li>
-                <li>
-                    <a href="#">Pages</a>
-                    <ul class="sub-menu">
-                        <li>
-                            <a href="portfolio-item.html">Portfolio Item</a>
-                        </li>
-                        <li>
-                            <a href="blog-single.html">Blog Article</a>
-                        </li>
-                        <li>
-                            <a href="shop-single.html">Shop Item</a>
-                        </li>
-                        <li>
-                            <a href="portfolio-category.html">Portfolio Category</a>
-                        </li>
-                    </ul>
-                </li> {% endcomment %}
                 <li>
                     <a href={% url "contact_page" %}>Contact</a>
                 </li>
